@@ -16,6 +16,7 @@ function responseLogger(response: AxiosResponse, config: ResponseLogConfig = {})
         .makeStatus(status, statusText)
         .makeHeader(headers)
         .makeData(data)
+        .makeCustom(response)
         .build();
 
     buildConfig.logger(log);

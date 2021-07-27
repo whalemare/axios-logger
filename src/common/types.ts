@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export interface CommonConfig {
     prefixText?: string | boolean,
     dateFormat?: string | boolean,
@@ -11,6 +13,8 @@ export interface GlobalLogConfig extends CommonConfig {
     url?: boolean,
     status?: boolean,
     statusText?: boolean,
+    dataMapper?: (data: object) => string
+    customResponseMapper?: (response: AxiosResponse) => string
 }
 
 export interface RequestLogConfig extends CommonConfig {

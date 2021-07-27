@@ -1,6 +1,7 @@
 import dateformat from 'dateformat';
 import { GlobalLogConfig } from './types';
 import chalk from 'chalk';
+import { AxiosResponse } from 'axios';
 
 class StringBuilder {
     private config: GlobalLogConfig;
@@ -54,7 +55,9 @@ class StringBuilder {
     }
 
     makeData(data: object) {
-        if(this.config.data && data) this.printQueue.push(JSON.stringify(data));
+        if(this.config.data && data) {
+            this.printQueue.push(this.config.dataMapper ? this.config.dataMapper(data) : JSON.stringify(data));
+        }
         return this;
     }
 
@@ -63,6 +66,16 @@ class StringBuilder {
         else if(this.config.status && status) this.printQueue.push(`${status}`);
         else if(this.config.statusText && statusText) this.printQueue.push(statusText);
         return this;
+    }
+
+    makeCustom(response: AxiosResponse) {
+        if (this.config.customResponseMapper) {
+            const data = this.config.customResponseMapper(response)
+            if (data) {
+                this.printQueue.push(data)
+            }
+        }
+        return this
     }
 
     build() {

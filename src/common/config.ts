@@ -10,6 +10,8 @@ let globalConfig: Required<GlobalLogConfig> = {
     prefixText: 'Axios',
     dateFormat: false,
     headers: false,
+    dataMapper: JSON.stringify,
+    customResponseMapper: () => "",
 };
 
 function getGlobalConfig() {
